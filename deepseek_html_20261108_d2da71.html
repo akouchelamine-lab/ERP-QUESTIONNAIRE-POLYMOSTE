@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Questionnaire Métier – ERP Mini SARL POLYMOSTE</title>
+<style>
+  :root{--bleu:#0b3d6b;--bleu2:#14507f;--bg:#f5f8fc;--bord:#c7d7e8;--ok:#1e8e3e;--accent:#e08e0b}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Calibri,Arial,sans-serif;font-size:15px;line-height:1.55;color:#1a1a1a;background:var(--bg)}
+  header{background:linear-gradient(135deg,#0b3d6b,#14507f);color:#fff;padding:24px 16px;position:sticky;top:0;z-index:10;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+  header h1{margin:0;font-size:19px}
+  header p{margin:4px 0 0;font-size:13px;opacity:.9}
+  #bar{height:5px;background:rgba(255,255,255,.2);margin-top:12px;border-radius:3px;overflow:hidden}
+  #bar>div{height:100%;width:0;background:#4ade80;transition:width .3s}
+  main{max-width:960px;margin:auto;padding:16px}
+  section{background:#fff;border:1px solid var(--bord);border-radius:10px;padding:20px 22px;margin:18px 0;box-shadow:0 1px 3px rgba(11,61,107,.07)}
+  h2{color:var(--bleu);font-size:17px;margin:0 0 8px;border-bottom:2px solid var(--bord);padding-bottom:8px;display:flex;align-items:center;gap:8px}
+  h2 .num{background:var(--bleu);color:#fff;width:28px;height:28px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+  h3{color:var(--bleu2);font-size:15px;margin:20px 0 8px}
+  h4{color:#333;font-size:14px;margin:14px 0 6px}
+  label{display:block;font-weight:600;margin:12px 0 4px;font-size:14px}
+  label.inline{display:inline-flex;align-items:center;gap:7px;font-weight:400;margin:5px 14px 5px 0;cursor:pointer}
+  input[type=text],input[type=email],input[type=tel],input[type=number],input[type=date],select,textarea{
+    width:100%;padding:9px 11px;border:1px solid var(--bord);border-radius:7px;font:inherit;background:#fff}
+  input:focus,select:focus,textarea:focus{outline:2px solid #7fb2e5;border-color:#7fb2e5}
+  textarea{min-height:75px;resize:vertical}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:0 16px}
+  @media(max-width:640px){.grid{grid-template-columns:1fr}}
+  .req::after{content:" *";color:#c00}
+  .chk{background:#f9fbfe;border:1px dashed var(--bord);border-radius:8px;padding:12px 14px;margin:8px 0}
+  .chk label{font-weight:400;margin:5px 0;display:block}
+  table{width:100%;border-collapse:collapse;margin:10px 0}
+  th,td{border:1px solid var(--bord);padding:7px;font-size:13.5px;text-align:left;vertical-align:top}
+  th{background:var(--bleu);color:#fff}
+  tr:nth-child(even) td{background:#f8fafd}
+  .btn{background:var(--bleu);color:#fff;border:0;padding:12px 22px;border-radius:8px;font-size:15px;cursor:pointer;font-weight:600}
+  .btn:hover{background:var(--bleu2)}
+  .btn.sec{background:#e8eef6;color:var(--bleu)}
+  .btn.sec:hover{background:#d5e2f0}
+  .actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:26px 0 40px}
+  .note{background:#eef4fa;border-left:4px solid var(--bleu);padding:10px 14px;border-radius:0 6px 6px 0;font-size:13.5px;margin:12px 0}
+  .warn{background:#fff8ec;border-left:4px solid var(--accent);padding:10px 14px;border-radius:0 6px 6px 0;font-size:13.5px;margin:12px 0}
+  .small{font-size:12.5px;color:#555;font-weight:400}
+  #msg{display:none;padding:14px;border-radius:8px;margin:16px 0;font-weight:600;text-align:center}
+  #msg.ok{display:block;background:#e6f4ea;color:#1e6b32;border:1px solid #a8d5b5}
+  #msg.err{display:block;background:#fdecea;color:#a4161a;border:1px solid #f2b8b5}
+  .rm{background:none;border:0;color:#c00;cursor:pointer;font-size:18px;line-height:1}
+  .flow{background:#f0f6fc;border:1px solid #b9d0e5;border-radius:8px;padding:14px;margin:10px 0}
+  .flow .arrow{color:var(--bleu);font-weight:bold;font-size:18px;padding:0 6px}
+  .flow-step{display:inline-block;background:#fff;border:1px solid var(--bleu);border-radius:6px;padding:4px 10px;font-size:13px;margin:3px 0}
+  footer{text-align:center;font-size:12px;color:#666;padding:20px}
+  @media print{header,.actions,#bar,footer{display:none}section{break-inside:avoid;box-shadow:none}}
+</style>
+</head>
+<body>
+<header>
+  <h1>Questionnaire Métier – Projet ERP Mini « POLYMOSTE‑ERP »</h1>
+  <p>SARL POLYMOSTE – Mezloug, Sétif &nbsp;|&nbsp; Développeur : AKOUCHE Lamine – 0773 71 20 08</p>
+  <div id="bar"><div></div></div>
+</header>
+
+<main>
+<div id="msg"></div>
+
+<div class="note">
+  <b>À remplir par les services opérationnels de SARL POLYMOSTE</b> (Commercial, Stock, Production, Qualité, Maintenance, Transport) et la Direction.<br>
+  Ce questionnaire porte <b>uniquement sur l'organisation métier</b> et les <b>processus</b>. Les choix techniques (architecture, technologies, serveur, sécurité, réseaux…) seront traités séparément par le développeur.<br>
+  <span class="small">Une réponse même partielle est utile. Sauvegarde automatique dans le navigateur.</span>
+</div>
+
+<form id="f" novalidate>
+
+<!-- ============ 1. CONTEXTE MÉTIER ============ -->
+<section>
+  <h2><span class="num">1</span> Contexte métier et objectifs</h2>
+
+  <label class="req">Décrivez brièvement l'activité et l'organisation actuelle de la société (produits fabriqués, ateliers, services, effectif par service).</label>
+  <textarea name="activite_orga" required></textarea>
+
+  <label>Quels outils utilisez-vous aujourd'hui ? (précisez le service)</label>
+  <div class="chk">
+    <label class="inline"><input type="checkbox" name="outils" value="Papier / registres"> Papier / registres</label>
+    <label class="inline"><input type="checkbox" name="outils" value="Excel"> Excel / tableurs</label>
+    <label class="inline"><input type="checkbox" name="outils" value="Logiciel commercial"> Logiciel commercial / caisse</label>
+    <label class="inline"><input type="checkbox" name="outils" value="Logiciel stock"> Logiciel de stock</label>
+    <label class="inline"><input type="checkbox" name="outils" value="Logiciel production"> Logiciel de production</label>
+    <label class="inline"><input type="checkbox" name="outils" value="Aucun outil formalisé"> Aucun outil formalisé</label>
+    <label class="inline"><input type="checkbox" name="outils" value="Autre"> Autre</label>
+  </div>
+
+  <label>Quels sont les principaux problèmes rencontrés au quotidien ? (cochez)</label>
+  <div class="chk">
+    <label class="inline"><input type="checkbox" name="problemes" value="Manque de traçabilité"> Manque de traçabilité des opérations</label>
+    <label class="inline"><input type="checkbox" name="problemes" value="Ressaisie et erreurs"> Ressaisie, erreurs de saisie</label>
+    <label class="inline"><input type="checkbox" name="problemes" value="Pas de vision consolidée"> Pas de vision consolidée pour la direction</label>
+    <label class="inline"><input type="checkbox" name="problemes" value="Ruptures de stock"> Ruptures de stock non anticipées</label>
+    <label class="inline"><input type="checkbox" name="problemes" value="Retards de livraison"> Retards de livraison / suivi véhicules</label>
+    <label class="inline"><input type="checkbox" name="problemes" value="Suivi machines"> Pannes machines non anticipées</label>
+    <label class="inline"><input type="checkbox" name="problemes" value="Non-conformités qualité"> Non‑conformités qualité difficiles à suivre</label>
+    <label class="inline"><input type="checkbox" name="problemes" value="Autre"> Autre</label>
+  </div>
+
+  <label>Objectifs prioritaires attendus du futur ERP (2 à 3 phrases)</label>
+  <textarea name="objectifs" placeholder="Ex : centraliser, fiabiliser, donner une vision temps réel à la direction…"></textarea>
+</section>
+
+<!-- ============ 2. PÉRIMÈTRE ============ -->
+<section>
+  <h2><span class="num">2</span> Périmètre métier – Modules souhaités</h2>
+  <p class="small">Pour chaque module, indiquez s'il est inclus et sa priorité (P1 = indispensable, P2 = important, P3 = optionnel).</p>
+  <table id="mods">
+    <thead><tr><th>Module métier</th><th style="width:110px">Inclus ?</th><th style="width:130px">Priorité</th></tr></thead>
+    <tbody>
+      <tr><td>Commercial (clients, devis, commandes, ventes, factures)</td><td><select name="mod_commercial"><option>Oui</option><option>Non</option></select></td><td><select name="prio_commercial"><option>P1</option><option>P2</option><option>P3</option></select></td></tr>
+      <tr><td>Stock (matières premières, produits finis, mouvements)</td><td><select name="mod_stock"><option>Oui</option><option>Non</option></select></td><td><select name="prio_stock"><option>P1</option><option>P2</option><option>P3</option></select></td></tr>
+      <tr><td>Production (ordres de fabrication, gammes, rendements)</td><td><select name="mod_production"><option>Oui</option><option>Non</option></select></td><td><select name="prio_production"><option>P1</option><option>P2</option><option>P3</option></select></td></tr>
+      <tr><td>Contrôle Qualité (fiches de contrôle, non‑conformités)</td><td><select name="mod_qualite"><option>Oui</option><option>Non</option></select></td><td><select name="prio_qualite"><option>P1</option><option>P2</option><option>P3</option></select></td></tr>
+      <tr><td>Maintenance (préventive, curative, machines)</td><td><select name="mod_maintenance"><option>Oui</option><option>Non</option></select></td><td><select name="prio_maintenance"><option>P1</option><option>P2</option><option>P3</option></select></td></tr>
+      <tr><td>Transport &amp; Gestion de parc (véhicules, missions, carburant)</td><td><select name="mod_transport"><option>Oui</option><option>Non</option></select></td><td><select name="prio_transport"><option>P1</option><option>P2</option><option>P3</option></select></td></tr>
+      <tr><td>Tableau de bord Direction (KPI dynamiques)</td><td><select name="mod_dashboard"><option>Oui</option><option>Non</option></select></td><td><select name="prio_dashboard"><option>P1</option><option>P2</option><option>P3</option></select></td></tr>
+    </tbody>
+  </table>
+
+  <label>Ce que le logiciel ne doit <u>pas</u> gérer (périmètre exclu)</label>
+  <textarea name="perimetre_exclu" placeholder="Ex : comptabilité générale, paie, site e-commerce, GED avancée…"></textarea>
+</section>
+
+<!-- ============ 3. FONCTIONS MÉTIER PAR MODULE ============ -->
+<section>
+  <h2><span class="num">3</span> Fonctions métier souhaitées par module</h2>
+  <p class="small">Cochez uniquement les fonctions réellement utilisées dans votre organisation.</p>
+
+  <h3>3.1 Commercial</h3>
+  <div class="chk">
+    <label><input type="checkbox" name="commercial" value="C-01 Fiche client"> C‑01 — Fiche client (coordonnées, catégorie, historique, conditions de paiement)</label>
+    <label><input type="checkbox" name="commercial" value="C-02 Devis"> C‑02 — Création et suivi des devis (n°, date, lignes, remise, TVA)</label>
+    <label><input type="checkbox" name="commercial" value="C-03 Devis→Commande"> C‑03 — Transformation devis → commande client</label>
+    <label><input type="checkbox" name="commercial" value="C-04 Bon de livraison"> C‑04 — Bons de livraison</label>
+    <label><input type="checkbox" name="commercial" value="C-05 Facturation"> C‑05 — Facturation et suivi des règlements</label>
+    <label><input type="checkbox" name="commercial" value="C-06 Suivi CA"> C‑06 — Suivi du chiffre d'affaires par client / produit / période</label>
+    <label><input type="checkbox" name="commercial" value="C-07 Tarifs"> C‑07 — Grille tarifaire par produit / par client</label>
+    <label><input type="checkbox" name="commercial" value="C-08 Relances impayés"> C‑08 — Suivi des impayés et relances</label>
+    <label><input type="checkbox" name="commercial" value="C-09 Retours client"> C‑09 — Gestion des retours client / avoirs</label>
+    <label><input type="checkbox" name="commercial" value="C-10 Autre"> C‑10 — Autre (préciser en section 8)</label>
+  </div>
+
+  <h3>3.2 Stock</h3>
+  <div class="chk">
+    <label><input type="checkbox" name="stock" value="S-01 Fiches articles"> S‑01 — Fiches articles (matières premières et produits finis)</label>
+    <label><input type="checkbox" name="stock" value="S-02 Multi-dépôts"> S‑02 — Gestion multi‑dépôts / emplacements (magasin MP, atelier, magasin PF…)</label>
+    <label><input type="checkbox" name="stock" value="S-03 Entrées"> S‑03 — Entrées : achats fournisseurs, retours, production</label>
+    <label><input type="checkbox" name="stock" value="S-04 Sorties"> S‑04 — Sorties : ventes, consommation production, rebuts</label>
+    <label><input type="checkbox" name="stock" value="S-05 Transferts"> S‑05 — Transferts entre dépôts</label>
+    <label><input type="checkbox" name="stock" value="S-06 Inventaires"> S‑06 — Inventaires périodiques (saisie, écarts)</label>
+    <label><input type="checkbox" name="stock" value="S-07 Seuils"> S‑07 — Seuils d'alerte et propositions de réapprovisionnement</label>
+    <label><input type="checkbox" name="stock" value="S-08 Lots FIFO"> S‑08 — Traçabilité par lot (FIFO)</label>
+    <label><input type="checkbox" name="stock" value="S-09 Valorisation"> S‑09 — Valorisation du stock</label>
+    <label><input type="checkbox" name="stock" value="S-10 Demandes d'achat"> S‑10 — Demandes d'achat fournisseurs</label>
+  </div>
+  <label>Méthode de valorisation utilisée actuellement</label>
+  <select name="valorisation">
+    <option value="">— Choisir —</option><option>CUMP</option><option>FIFO</option><option>Prix standard</option><option>Non définie / à définir</option>
+  </select>
+
+  <h3>3.3 Production</h3>
+  <div class="chk">
+    <label><input type="checkbox" name="production" value="P-01 Nomenclatures"> P‑01 — Nomenclatures (BOM) des produits finis</label>
+    <label><input type="checkbox" name="production" value="P-02 Gammes"> P‑02 — Gammes de fabrication et postes de travail</label>
+    <label><input type="checkbox" name="production" value="P-03 Ordres de fabrication"> P‑03 — Ordres de fabrication (OF) / lancement</label>
+    <label><input type="checkbox" name="production" value="P-04 Suivi OF"> P‑04 — Suivi de l'avancement des OF en temps réel</label>
+    <label><input type="checkbox" name="production" value="P-05 Consommation MP"> P‑05 — Déclaration de consommation matières et de production réalisée</label>
+    <label><input type="checkbox" name="production" value="P-06 Rendement coûts"> P‑06 — Calcul du rendement et des coûts de production</label>
+    <label><input type="checkbox" name="production" value="P-07 Rebuts"> P‑07 — Gestion des rebuts et pertes de fabrication</label>
+    <label><input type="checkbox" name="production" value="P-08 Planification"> P‑08 — Planification / ordonnancement des OF</label>
+  </div>
+
+  <h3>3.4 Contrôle Qualité</h3>
+  <div class="chk">
+    <label><input type="checkbox" name="qualite" value="Q-01 Fiches contrôle"> Q‑01 — Fiches de contrôle (réception MP, en‑cours, produit fini)</label>
+    <label><input type="checkbox" name="qualite" value="Q-02 Critères"> Q‑02 — Paramètres de contrôle (densité, dimensions, poids, aspect…)</label>
+    <label><input type="checkbox" name="qualite" value="Q-03 Résultats"> Q‑03 — Enregistrement des résultats et verdict conformité</label>
+    <label><input type="checkbox" name="qualite" value="Q-04 Non-conformités"> Q‑04 — Fiches de non‑conformité (ouverture, analyse, clôture)</label>
+    <label><input type="checkbox" name="qualite" value="Q-05 Actions correctives"> Q‑05 — Actions correctives et préventives</label>
+    <label><input type="checkbox" name="qualite" value="Q-06 Statistiques"> Q‑06 — Statistiques qualité (taux de conformité, Pareto)</label>
+  </div>
+
+  <h3>3.5 Maintenance</h3>
+  <div class="chk">
+    <label><input type="checkbox" name="maintenance" value="M-01 Inventaire machines"> M‑01 — Inventaire des machines et équipements</label>
+    <label><input type="checkbox" name="maintenance" value="M-02 Préventive"> M‑02 — Plan de maintenance préventive (périodicités)</label>
+    <label><input type="checkbox" name="maintenance" value="M-03 Demandes intervention"> M‑03 — Demandes d'intervention (pannes) / maintenance curative</label>
+    <label><input type="checkbox" name="maintenance" value="M-04 Ordres de travail"> M‑04 — Ordres de travail et affectation des techniciens</label>
+    <label><input type="checkbox" name="maintenance" value="M-05 Historique"> M‑05 — Historique complet des interventions par machine</label>
+    <label><input type="checkbox" name="maintenance" value="M-06 Pièces rechange"> M‑06 — Gestion des pièces de rechange (liée au stock)</label>
+    <label><input type="checkbox" name="maintenance" value="M-07 Indicateurs"> M‑07 — Indicateurs (MTBF, MTTR, taux de disponibilité)</label>
+  </div>
+
+  <h3>3.6 Transport &amp; Gestion de parc</h3>
+  <div class="chk">
+    <label><input type="checkbox" name="transport" value="T-01 Fiches véhicules"> T‑01 — Fiches véhicules (immat., marque, assurance, visite technique)</label>
+    <label><input type="checkbox" name="transport" value="T-02 Missions"> T‑02 — Planification des missions / livraisons</label>
+    <label><input type="checkbox" name="transport" value="T-03 Chauffeurs"> T‑03 — Affectation des chauffeurs et suivi</label>
+    <label><input type="checkbox" name="transport" value="T-04 Carburant"> T‑04 — Suivi carburant et consommation par véhicule</label>
+    <label><input type="checkbox" name="transport" value="T-05 Entretien"> T‑05 — Suivi des entretiens et réparations</label>
+    <label><input type="checkbox" name="transport" value="T-06 Alertes"> T‑06 — Alertes (assurance, visite technique, vidange)</label>
+    <label><input type="checkbox" name="transport" value="T-07 Coûts"> T‑07 — Coûts par véhicule / par mission</label>
+  </div>
+</section>
+
+<!-- ============ 4. WORKFLOWS ENTRE PROCESSUS ============ -->
+<section>
+  <h2><span class="num">4</span> Workflows entre processus</h2>
+
+  <div class="warn">
+    <b>Section clé du projet.</b> Cette partie permet de comprendre <b>comment les services travaillent ensemble</b> : qui déclenche quelle action, à quel moment, avec quel document, et que se passe‑t‑il en cas d'anomalie.
+  </div>
+
+  <h3>4.1 Matrice de déclenchement entre modules</h3>
+  <p class="small">Pour chaque interaction, indiquez si elle existe et décrivez brièvement le déclencheur.</p>
+  <table>
+    <thead><tr><th style="width:36%">Interaction</th><th style="width:70px">Existe ?</th><th>Déclencheur / condition</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>Commercial → Stock : <i>réservation de stock à la commande</i></td>
+        <td><select name="wf_vente_stock"><option>—</option><option>Oui</option><option>Non</option></select></td>
+        <td><input type="text" name="wf_vente_stock_desc" placeholder="Ex : dès validation du devis"></td>
+      </tr>
+      <tr>
+        <td>Commercial → Production : <i>déclenchement d'un OF</i></td>
+        <td><select name="wf_vente_prod"><option>—</option><option>Oui</option><option>Non</option></select></td>
+        <td><input type="text" name="wf_vente_prod_desc" placeholder="Ex : commande client validée sans stock disponible"></td>
+      </tr>
+      <tr>
+        <td>Stock → Production : <i>consommation des matières premières</i></td>
+        <td><select name="wf_stock_prod"><option>—</option><option>Oui</option><option>Non</option></select></td>
+        <td><input type="text" name="wf_stock_prod_desc" placeholder="Ex : à chaque lancement d'OF"></td>
+      </tr>
+      <tr>
+        <td>Production → Qualité : <i>demande de contrôle produit fini</i></td>
+        <td><select name="wf_prod_qual"><option>—</option><option>Oui</option><option>Non</option></select></td>
+        <td><input type="text" name="wf_prod_qual_desc" placeholder="Ex : fin de chaque lot / à chaque OF"></td>
+      </tr>
+      <tr>
+        <td>Qualité → Stock : <i>entrée en stock des produits conformes</i></td>
+        <td><select name="wf_qual_stock"><option>—</option><option>Oui</option><option>Non</option></select></td>
+        <td><input type="text" name="wf_qual_stock_desc" placeholder="Ex : après verdict conforme"></td>
+      </tr>
+      <tr>
+        <td>Qualité → Production : <i>retour pour reprise après non‑conformité</i></td>
+        <td><select name="wf_qual_prod"><option>—</option><option>Oui</option><option>Non</option></select></td>
+        <td><input type="text" name="wf_qual_prod_desc" placeholder="Ex : si non conforme et reprise possible"></td>
+      </tr>
+      <tr>
+        <td>Production → Maintenance : <i>demande d'intervention machine</i></td>
+        <td><select name="wf_prod_maint"><option>—</option><option>Oui</option><option>Non</option></select></td>
+        <td><input type="text" name="wf_prod_maint_desc" placeholder="Ex : panne bloquante constatée par opérateur"></td>
+      </tr>
+      <tr>
+        <td>Maintenance → Production : <i>remise en service machine</i></td>
+        <td><select name="wf_maint_prod"><option>—</option><option>Oui</option><option>Non</option></select></td>
+        <td><input type="text" name="wf_maint_prod_desc" placeholder="Ex : après clôture OT de réparation"></td>
+      </tr>
+      <tr>
+        <td>Maintenance → Stock : <i>consommation de pièces de rechange</i></td>
+        <td><select name="wf_maint_stock"><option>—</option><option>Oui</option><option>Non</option></select></td>
+        <td><input type="text" name="wf_maint_stock_desc" placeholder="Ex : à chaque OT utilisant des pièces"></td>
+      </tr>
+      <tr>
+        <td>Commercial → Transport : <i>demande de livraison</i></td>
+        <td><select name="wf_com_transport"><option>—</option><option>Oui</option><option>Non</option></select></td>
+        <td><input type="text" name="wf_com_transport_desc" placeholder="Ex : commande prête en stock PF"></td>
+      </tr>
+      <tr>
+        <td>Transport → Commercial : <i>retour BL signé / preuve de livraison</i></td>
+        <td><select name="wf_transport_com"><option>—</option><option>Oui</option><option>Non</option></select></td>
+        <td><input type="text" name="wf_transport_com_desc" placeholder="Ex : après chaque tournée"></td>
+      </tr>
+      <tr>
+        <td>Stock (seuil atteint) → Commercial : <i>alerte rupture</i></td>
+        <td><select name="wf_stock_com_alerte"><option>—</option><option>Oui</option><option>Non</option></select></td>
+        <td><input type="text" name="wf_stock_com_alerte_desc" placeholder="Ex : quand stock sous seuil minimum"></td>
+      </tr>
+      <tr>
+        <td>Stock (seuil atteint) → Achats : <i>proposition de réapprovisionnement</i></td>
+        <td><select name="wf_stock_achats"><option>—</option><option>Oui</option><option>Non</option></select></td>
+        <td><input type="text" name="wf_stock_achats_desc" placeholder="Ex : quand stock MP sous seuil"></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>4.2 Parcours métier d'une commande client</h3>
+  <p class="small">Décrivez le chemin complet d'une commande, <b>de la demande du client jusqu'à l'encaissement</b>.</p>
+  <div class="flow">
+    <span class="flow-step">Demande client</span><span class="arrow">→</span>
+    <span class="flow-step">Devis</span><span class="arrow">→</span>
+    <span class="flow-step">Commande</span><span class="arrow">→</span>
+    <span class="flow-step">Réservation / OF</span><span class="arrow">→</span>
+    <span class="flow-step">Préparation</span><span class="arrow">→</span>
+    <span class="flow-step">Livraison</span><span class="arrow">→</span>
+    <span class="flow-step">Facture</span><span class="arrow">→</span>
+    <span class="flow-step">Règlement</span>
+  </div>
+  <label>Acteurs et responsabilités à chaque étape</label>
+  <textarea name="wf_parcours_commande" placeholder="Ex : Commercial crée le devis → Direction valide au‑delà de X DA → Magasin prépare → Chauffeur livre → Commercial facture…"></textarea>
+  <label>Documents générés à chaque étape</label>
+  <input type="text" name="wf_docs_commande" placeholder="Devis, bon de préparation, BL, facture, bon de retour…">
+  <label>Points de contrôle / validations obligatoires</label>
+  <input type="text" name="wf_ctrl_commande" placeholder="Ex : validation direction si remise > X% ; contrôle qualité avant livraison…">
+  <label>Exceptions courantes (annulation, rupture, retard, retour)</label>
+  <textarea name="wf_exceptions_commande"></textarea>
+
+  <h3>4.3 Parcours métier d'un ordre de fabrication</h3>
+  <p class="small">Décrivez comment un produit est fabriqué, <b>du lancement de l'OF jusqu'à la clôture et la mise en stock</b>.</p>
+  <div class="flow">
+    <span class="flow-step">Besoin identifié</span><span class="arrow">→</span>
+    <span class="flow-step">OF créé</span><span class="arrow">→</span>
+    <span class="flow-step">Sortie MP</span><span class="arrow">→</span>
+    <span class="flow-step">Fabrication</span><span class="arrow">→</span>
+    <span class="flow-step">Contrôle qualité</span><span class="arrow">→</span>
+    <span class="flow-step">Entrée PF</span><span class="arrow">→</span>
+    <span class="flow-step">Clôture OF</span>
+  </div>
+  <label>Déclencheur du lancement d'un OF</label>
+  <input type="text" name="wf_of_declencheur" placeholder="Ex : commande client, seuil PF atteint, prévision…">
+  <label>Acteurs à chaque étape (qui lance, qui produit, qui contrôle, qui clôture)</label>
+  <textarea name="wf_of_acteurs"></textarea>
+  <label>Déclaration de la consommation MP et de la production : comment se fait‑elle aujourd'hui ?</label>
+  <textarea name="wf_of_declaration" placeholder="Ex : saisie fin de poste, papier, oral…"></textarea>
+  <label>Gestion des rebuts / pertes en cours de fabrication</label>
+  <textarea name="wf_of_rebuts"></textarea>
+  <label>Exceptions (arrêt machine, rupture MP, changement de gamme, OF annulé)</label>
+  <textarea name="wf_of_exceptions"></textarea>
+
+  <h3>4.4 Parcours métier d'une non‑conformité qualité</h3>
+  <div class="flow">
+    <span class="flow-step">Détection</span><span class="arrow">→</span>
+    <span class="flow-step">Fiche NC</span><span class="arrow">→</span>
+    <span class="flow-step">Analyse</span><span class="arrow">→</span>
+    <span class="flow-step">Action corrective</span><span class="arrow">→</span>
+    <span class="flow-step">Vérification</span><span class="arrow">→</span>
+    <span class="flow-step">Clôture</span>
+  </div>
+  <label>Qui détecte et qui ouvre la fiche de non‑conformité ?</label>
+  <input type="text" name="wf_nc_detecte">
+  <label>Qui analyse et qui décide de l'action (mise au rebut, reprise, déclassement, retour client…) ?</label>
+  <textarea name="wf_nc_decision"></textarea>
+  <label>Ces NC doivent‑elles être visibles dans le tableau de bord Direction ?</label>
+  <select name="wf_nc_dashboard"><option>—</option><option>Oui</option><option>Non</option></select>
+
+  <h3>4.5 Parcours métier d'une panne machine</h3>
+  <div class="flow">
+    <span class="flow-step">Panne constatée</span><span class="arrow">→</span>
+    <span class="flow-step">Demande</span><span class="arrow">→</span>
+    <span class="flow-step">OT créé</span><span class="arrow">→</span>
+    <span class="flow-step">Intervention</span><span class="arrow">→</span>
+    <span class="flow-step">Remise en service</span><span class="arrow">→</span>
+    <span class="flow-step">Clôture</span>
+  </div>
+  <label>Qui déclare la panne ? Qui valide l'intervention ? Qui clôt l'OT ?</label>
+  <textarea name="wf_panne_acteurs"></textarea>
+  <label>Faut‑il un suivi des pièces de rechange consommées (lié au stock) ?</label>
+  <select name="wf_panne_pieces"><option>—</option><option>Oui</option><option>Non</option></select>
+  <label>Faut‑il alerter la Direction pour les pannes bloquantes ?</label>
+  <select name="wf_panne_alerte_direction"><option>—</option><option>Oui</option><option>Non</option></select>
+
+  <h3>4.6 Parcours métier d'une livraison</h3>
+  <div class="flow">
+    <span class="flow-step">Besoin livraison</span><span class="arrow">→</span>
+    <span class="flow-step">Planification</span><span class="arrow">→</span>
+    <span class="flow-step">Affectation chauffeur</span><span class="arrow">→</span>
+    <span class="flow-step">Chargement</span><span class="arrow">→</span>
+    <span class="flow-step">Livraison</span><span class="arrow">→</span>
+    <span class="flow-step">Retour BL signé</span>
+  </div>
+  <label>Qui planifie les livraisons et selon quels critères ?</label>
+  <textarea name="wf_livraison_planif"></textarea>
+  <label>Suivez‑vous le carburant / les kilomètres par mission et par véhicule ?</label>
+  <select name="wf_livraison_carburant"><option>—</option><option>Oui</option><option>Non</option></select>
+  <label>Gestion des retours de marchandise / litiges à la livraison</label>
+  <textarea name="wf_livraison_retours"></textarea>
+</section>
+
+<!-- ============ 5. UTILISATEURS ET RÔLES ============ -->
+<section>
+  <h2><span class="num">5</span> Utilisateurs et rôles métier</h2>
+  <p class="small">Indiquez qui utilise le futur ERP, dans quel service, et avec quel rôle principal. Les droits fins seront validés avec la Direction.</p>
+  <table id="userTable">
+    <thead><tr><th>Nom &amp; Prénom</th><th>Service</th><th>Rôle principal</th><th>Remarques / spécificités</th><th></th></tr></thead>
+    <tbody></tbody>
+  </table>
+  <button type="button" class="btn sec" id="addUser">+ Ajouter un utilisateur</button>
+
+  <label style="margin-top:18px">Y a‑t‑il des règles de confidentialité / restrictions à respecter ?</label>
+  <textarea name="confidentialite" placeholder="Ex : seuls la Direction et le Commercial voient les prix et marges ; seuls les techniciens voient l'historique de maintenance…"></textarea>
+</section>
+
+<!-- ============ 6. DASHBOARD DIRECTION ============ -->
+<section>
+  <h2><span class="num">6</span> Tableau de bord Direction – KPI métier</h2>
+  <p class="small">Cochez les indicateurs que la Direction souhaite voir en priorité. Style visuel dynamique type Power BI (graphiques, filtres, cartes).</p>
+
+  <div class="chk">
+    <label><input type="checkbox" name="kpi" value="CA jour/mois/année"> Chiffre d'affaires (jour / mois / année)</label>
+    <label><input type="checkbox" name="kpi" value="Top clients"> Top 10 clients</label>
+    <label><input type="checkbox" name="kpi" value="Top produits"> Top 10 produits vendus</label>
+    <label><input type="checkbox" name="kpi" value="Créances / impayés"> Créances clients / impayés</label>
+    <label><input type="checkbox" name="kpi" value="Valeur du stock"> Valeur du stock (MP + PF)</label>
+    <label><input type="checkbox" name="kpi" value="Articles sous seuil"> Articles sous seuil d'alerte</label>
+    <label><input type="checkbox" name="kpi" value="Rotations de stock"> Rotation / couverture de stock</label>
+    <label><input type="checkbox" name="kpi" value="Production réalisée vs prévue"> Production réalisée vs prévue</label>
+    <label><input type="checkbox" name="kpi" value="Rendement / rebuts"> Rendement machines / taux de rebuts</label>
+    <label><input type="checkbox" name="kpi" value="Taux de conformité"> Taux de conformité qualité</label>
+    <label><input type="checkbox" name="kpi" value="NC ouvertes / clôturées"> Non‑conformités ouvertes / clôturées</label>
+    <label><input type="checkbox" name="kpi" value="Disponibilité machines"> Taux de disponibilité machines</label>
+    <label><input type="checkbox" name="kpi" value="Interventions en retard"> Interventions maintenance en retard</label>
+    <label><input type="checkbox" name="kpi" value="Coût carburant"> Coût carburant par mois / véhicule</label>
+    <label><input type="checkbox" name="kpi" value="Missions en cours"> Missions du jour / véhicules indisponibles</label>
+    <label><input type="checkbox" name="kpi" value="Alertes transverses"> Alertes transverses (assurance, visite technique, seuils…)</label>
+    <label><input type="checkbox" name="kpi" value="Autre KPI"> Autre (préciser ci‑dessous)</label>
+  </div>
+
+  <label>Autres indicateurs souhaités par la Direction</label>
+  <textarea name="kpi_autres"></textarea>
+
+  <label>Filtres utiles sur le tableau de bord</label>
+  <input type="text" name="kpi_filtres" placeholder="Ex : période, service, client, produit, atelier, véhicule…">
+
+  <div class="grid">
+    <div>
+      <label>Fréquence de consultation attendue</label>
+      <select name="kpi_freq">
+        <option value="">— Choisir —</option>
+        <option>En temps réel</option>
+        <option>Quotidienne</option>
+        <option>Hebdomadaire</option>
+        <option>Mensuelle</option>
+      </select>
+    </div>
+    <div>
+      <label>Qui consulte le tableau de bord ?</label>
+      <select name="kpi_qui">
+        <option value="">— Choisir —</option>
+        <option>Direction uniquement</option>
+        <option>Direction + chefs de service</option>
+        <option>Tous les responsables</option>
+      </select>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 7. PRIORITÉS ET CONTRAINTES MÉTIER ============ -->
+<section>
+  <h2><span class="num">7</span> Priorités et contraintes métier</h2>
+
+  <label class="req">Classez les modules par ordre de mise en service souhaité (1 = en premier)</label>
+  <table>
+    <thead><tr><th style="width:60%">Module</th><th>Ordre (1, 2, 3…)</th></tr></thead>
+    <tbody>
+      <tr><td>Commercial</td><td><input type="number" name="ordre_commercial" min="1" max="10"></td></tr>
+      <tr><td>Stock</td><td><input type="number" name="ordre_stock" min="1" max="10"></td></tr>
+      <tr><td>Production</td><td><input type="number" name="ordre_production" min="1" max="10"></td></tr>
+      <tr><td>Contrôle Qualité</td><td><input type="number" name="ordre_qualite" min="1" max="10"></td></tr>
+      <tr><td>Maintenance</td><td><input type="number" name="ordre_maintenance" min="1" max="10"></td></tr>
+      <tr><td>Transport &amp; Parc</td><td><input type="number" name="ordre_transport" min="1" max="10"></td></tr>
+      <tr><td>Tableau de bord Direction</td><td><input type="number" name="ordre_dashboard" min="1" max="10"></td></tr>
+    </tbody>
+  </table>
+
+  <div class="grid">
+    <div>
+      <label>Date souhaitée de mise en service</label>
+      <input type="date" name="date_service">
+    </div>
+    <div>
+      <label>Période de l'année la plus favorable (charge, congés…)</label>
+      <input type="text" name="periode_favorable" placeholder="Ex : hors campagne haute, éviter juillet-août…">
+    </div>
+  </div>
+
+  <label>Contraintes particulières à signaler</label>
+  <textarea name="contraintes_metier" placeholder="Ex : certaines opérations se font la nuit ; les chauffeurs n'ont pas accès à un PC ; le magasinier travaille en 2 postes…"></textarea>
+</section>
+
+<!-- ============ 8. DOCUMENTS ET REMARQUES ============ -->
+<section>
+  <h2><span class="num">8</span> Documents disponibles et remarques</h2>
+
+  <label>Documents que vous pouvez fournir pour nous aider à cadrer le projet</label>
+  <div class="chk">
+    <label class="inline"><input type="checkbox" name="doc" value="Organigramme"> Organigramme des services</label>
+    <label class="inline"><input type="checkbox" name="doc" value="Modèles devis/factures"> Modèles devis / factures / BL</label>
+    <label class="inline"><input type="checkbox" name="doc" value="Fiches contrôle qualité"> Fiches de contrôle qualité</label>
+    <label class="inline"><input type="checkbox" name="doc" value="Fiches NC"> Fiches de non‑conformité</label>
+    <label class="inline"><input type="checkbox" name="doc" value="Fiches machines"> Fiches machines / historique maintenance</label>
+    <label class="inline"><input type="checkbox" name="doc" value="Fiches véhicules"> Fiches véhicules / carnets d'entretien</label>
+    <label class="inline"><input type="checkbox" name="doc" value="Listing articles"> Listing articles / MP / PF</label>
+    <label class="inline"><input type="checkbox" name="doc" value="Listing clients/fournisseurs"> Listing clients / fournisseurs</label>
+    <label class="inline"><input type="checkbox" name="doc" value="Procédures internes"> Procédures / instructions de travail</label>
+  </div>
+
+  <label>Remarques libres (tout élément utile non couvert par ce questionnaire)</label>
+  <textarea name="remarques" style="min-height:100px"></textarea>
+
+  <label class="inline" style="margin-top:16px"><input type="checkbox" id="valid" required> Je valide les informations métier saisies dans ce questionnaire.</label>
+</section>
+
+<div class="actions">
+  <button type="submit" class="btn">✅ Envoyer le questionnaire</button>
+  <button type="button" class="btn sec" id="dl">⬇ Télécharger mes réponses (JSON)</button>
+  <button type="button" class="btn sec" onclick="window.print()">🖨 Imprimer / PDF</button>
+</div>
+
+</form>
+</main>
+
+<footer>Questionnaire Métier – Projet ERP Mini – SARL POLYMOSTE – Développeur : AKOUCHE Lamine – 0773 71 20 08</footer>
+
+<script>
+/* ============================================================
+   ⚙️ CONFIGURATION — à ajuster avant mise en ligne
+   ============================================================ */
+const FORMSPREE_ENDPOINT = ""; // ex: "https://formspree.io/f/abcdwxyz"
+const EMAIL_DESTINATAIRE  = "votre-email@exemple.com"; // mode sans Formspree
+
+/* ---------- Sauvegarde auto ---------- */
+const f = document.getElementById('f');
+const KEY = 'poly_erp_questionnaire_metier_v2';
+
+function saveDraft(){
+  try{ localStorage.setItem(KEY, JSON.stringify(collect())); }catch(e){}
+}
+function loadDraft(){
+  const raw = localStorage.getItem(KEY);
+  if(!raw) return;
+  try{
+    const d = JSON.parse(raw);
+    Object.keys(d).forEach(k=>{
+      if(k.startsWith('_')) return;
+      const el = f.elements[k];
+      if(!el) return;
+      const v = d[k];
+      if(el.type === 'checkbox'){
+        if(Array.isArray(v)){
+          [...f.querySelectorAll(`input[name="${k}"]`)].forEach(cb=>{ cb.checked = v.includes(cb.value); });
+        }
+      } else if(el.tagName === 'SELECT' || el.type !== 'radio'){
+        if(typeof v === 'string') el.value = v;
+      }
+    });
+    if(d._users && d._users.length) d._users.forEach(u=>addUserRow(u));
+  }catch(e){}
+}
+
+/* ---------- Table utilisateurs ---------- */
+const utb = document.querySelector('#userTable tbody');
+function addUserRow(u={}){
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td><input type="text" class="u-nom" value="${u.nom||''}"></td>
+    <td><input type="text" class="u-service" value="${u.service||''}"></td>
+    <td><select class="u-role">
+      <option>Direction</option><option>Commercial</option><option>Stock</option>
+      <option>Production</option><option>Qualité</option><option>Maintenance</option>
+      <option>Transport</option><option>Polyvalent</option>
+    </select></td>
+    <td><input type="text" class="u-remarque" value="${u.remarque||''}"></td>
+    <td><button type="button" class="rm" title="Supprimer">✖</button></td>`;
+  tr.querySelector('.u-role').value = u.role || 'Commercial';
+  tr.querySelector('.rm').onclick = ()=>{ tr.remove(); saveDraft(); };
+  utb.appendChild(tr);
+}
+document.getElementById('addUser').onclick = ()=>addUserRow();
+
+/* ---------- Collecte ---------- */
+function collect(){
+  const out = {};
+  const seen = {};
+  [...f.elements].forEach(el=>{
+    if(!el.name || el.disabled) return;
+    if(el.type === 'checkbox'){
+      if(!seen[el.name]){ seen[el.name] = true; out[el.name] = []; }
+      if(el.checked) out[el.name].push(el.value);
+    } else if(el.type === 'radio'){
+      if(el.checked) out[el.name] = el.value;
+    } else {
+      out[el.name] = el.value;
+    }
+  });
+  out._users = [...utb.querySelectorAll('tr')].map(tr=>({
+    nom: tr.querySelector('.u-nom').value,
+    service: tr.querySelector('.u-service').value,
+    role: tr.querySelector('.u-role').value,
+    remarque: tr.querySelector('.u-remarque').value
+  })).filter(u=>u.nom || u.service);
+  out._date_envoi = new Date().toISOString();
+  return out;
+}
+
+/* ---------- Barre de progression ---------- */
+function progress(){
+  const req = [...f.querySelectorAll('[required]')];
+  const filled = req.filter(el => el.type === 'checkbox' ? el.checked : el.value.trim() !== '');
+  const pct = req.length ? Math.round(filled.length / req.length * 100) : 0;
+  document.querySelector('#bar>div').style.width = pct + '%';
+}
+f.addEventListener('input', ()=>{ progress(); saveDraft(); });
+f.addEventListener('change', ()=>{ progress(); saveDraft(); });
+
+/* ---------- Messages ---------- */
+const msg = document.getElementById('msg');
+function show(ok, txt){
+  msg.className = ok ? 'ok' : 'err';
+  msg.textContent = txt;
+  msg.scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+/* ---------- Soumission ---------- */
+f.addEventListener('submit', async e=>{
+  e.preventDefault();
+  if(!document.getElementById('valid').checked){
+    show(false, 'Veuillez cocher la case de validation avant d’envoyer.');
+    return;
+  }
+  let bad = null;
+  [...f.querySelectorAll('[required]')].forEach(el=>{
+    if(!bad && (el.type === 'checkbox' ? !el.checked : !el.value.trim())) bad = el;
+  });
+  if(bad){
+    bad.focus();
+    show(false, 'Merci de compléter tous les champs obligatoires (*).');
+    return;
+  }
+
+  const data = collect();
+  const btn = f.querySelector('button[type=submit]');
+  btn.disabled = true; btn.textContent = '⏳ Envoi…';
+
+  try{
+    if(FORMSPREE_ENDPOINT){
+      const res = await fetch(FORMSPREE_ENDPOINT, {
+        method:'POST',
+        headers:{'Content-Type':'application/json','Accept':'application/json'},
+        body: JSON.stringify(data)
+      });
+      if(!res.ok) throw new Error('HTTP ' + res.status);
+      show(true, '✅ Merci ! Vos réponses ont bien été envoyées.');
+      localStorage.removeItem(KEY);
+      f.reset(); utb.innerHTML=''; progress();
+    } else {
+      downloadJSON(data);
+      const body = encodeURIComponent(buildText(data));
+      const subject = encodeURIComponent('Questionnaire Métier ERP – SARL POLYMOSTE');
+      const mailto = `mailto:${EMAIL_DESTINATAIRE}?subject=${subject}&body=${body}`;
+      show(true, '📥 Vos réponses ont été téléchargées. Une fenêtre e-mail va s’ouvrir : joignez le fichier JSON puis envoyez.');
+      setTimeout(()=>{ window.location.href = mailto; }, 1200);
+    }
+  }catch(err){
+    show(false, '❌ Échec de l’envoi : ' + err.message + '. Téléchargez vos réponses et envoyez-les par e-mail.');
+  }finally{
+    btn.disabled = false; btn.textContent = '✅ Envoyer le questionnaire';
+  }
+});
+
+/* ---------- JSON ---------- */
+function downloadJSON(data){
+  const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'questionnaire-metier-POLYMOSTE-' + new Date().toISOString().slice(0,10) + '.json';
+  a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href), 3000);
+}
+document.getElementById('dl').onclick = ()=>downloadJSON(collect());
+
+/* ---------- Résumé texte ---------- */
+function buildText(d){
+  const lines = ['RÉPONSES – QUESTIONNAIRE MÉTIER ERP MINI – SARL POLYMOSTE',''];
+  Object.keys(d).forEach(k=>{
+    if(k.startsWith('_')) return;
+    const v = d[k];
+    if(v === '' || (Array.isArray(v) && !v.length)) return;
+    lines.push(k + ' : ' + (Array.isArray(v) ? v.join(' | ') : v));
+  });
+  if(d._users && d._users.length){
+    lines.push('', 'UTILISATEURS :');
+    d._users.forEach((u,i)=>lines.push(`  ${i+1}. ${u.nom} | ${u.service} | ${u.role} | ${u.remarque}`));
+  }
+  lines.push('', 'Date : ' + d._date_envoi);
+  return lines.join('\n');
+}
+
+/* ---------- Init ---------- */
+addUserRow();
+loadDraft();
+progress();
+</script>
+</body>
+</html>
